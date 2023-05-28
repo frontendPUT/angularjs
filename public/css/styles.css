@@ -1,0 +1,34 @@
+.del_button {
+    color: blueviolet;
+    background-color: blanchedalmond;
+    
+}
+
+.del_button:hover {
+    color: red; 
+}
+
+.todo {
+
+}
+
+.todo_done {
+    text-decoration: line-through;
+}
+
+* {
+    box-sizing: border-box;
+  }
+
+  .column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; 
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }

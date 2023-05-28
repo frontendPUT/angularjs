@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="nodeTodo">
+  <head>
+    <!-- META -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Optimize mobile viewport -->
+
+    <title>Node/Angular Todo App</title>
+
+    <!-- SCROLLS -->
+    <link
+      rel="stylesheet"
+      href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <!-- load bootstrap -->
+    <style>
+      body {
+        background-color: rgb(202, 216, 228);
+        background-size: 100vw 100vh;
+        background-image: radial-gradient(
+            50% 50% at 50% 50%,
+            rgba(255, 255, 255, 0.75) 0%,
+            rgba(255, 255, 255, 0) 100%
+          ),
+          linear-gradient(
+            180deg,
+            rgb(202, 216, 228) 0%,
+            hsl(209, 36%, 86%) 15%,
+            hsl(224, 44%, 95%) 50%
+          );
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        width: 100%;
+        max-width: 64rem;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 0.6;
+      }
+
+      h1 {
+        margin-top: 200px;
+        font-size: 70px;
+        font-weight: 600;
+        background-image: linear-gradient(to left, #553c9a, #b393d3);
+        color: transparent;
+        -webkit-background-clip: text;
+        text-align: center;
+        max-width: 200px;
+        margin: 180px auto 50px auto;
+      }
+
+      .todo {
+        display: flex;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        margin: 1rem 0;
+        padding: 1.5em;
+        position: relative;
+        background-color: transparent;
+        border-left: none;
+        border-right: none;
+        width: 500px;
+        align-items: center;
+      }
+
+      .new-todo {
+        display: flex;
+        width: 500px;
+      }
+
+      .todo:hover {
+        cursor: pointer;
+      }
+      .plus {
+        width: 50px;
+        margin-left: 20px;
+      }
+      .button {
+        max-width: 80px;
+        padding: 1.5em 4px !important;
+        margin: auto 0px auto 20px;
+        text-align: center;
+        width: 100%;
+        justify-content: center;
+      }
+      .done {
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: rgb(75, 77, 77);
+        z-index: 2;
+        left: 0;
+        top: 50%;
+      }
+
+      input {
+        width: 430px !important;
+        background-color: hsl(209, 36%, 86%) !important;
+      }
+
+      .update {
+        padding-bottom: 4px !important;
+        padding-top: 4px !important;
+      }
+    </style>
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <!-- load angular -->
+    <script src="core.js"></script>
+  </head>
+
+  <body ng-controller="mainController">
+    <div class="section">
+      <h1>TODO</h1>
+
+      <!-- FORM TO CREATE TODOS -->
+      <div id="todo-form" class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+          <form>
+            <div class="new-todo">
+              <input
+                id="newTodo"
+                type="text"
+                class="todo"
+                placeholder="co jeszcze chcesz zrobić?"
+                ng-model="formData.text"
+              />
+              <button type="submit" class="todo plus" ng-click="createTodo()">
+                +
+              </button>
+            </div>
+          </form>
+
+          <div id="todo-list" class="row">
+            <div class="">
+              <div class="checkbox" ng-repeat="todo in todos">
+                <div style="display: flex; width: 500px">
+                  <span class="todo" ng-click="markDone(todo)"
+                    >{{ todo.text }}
+                    <div ng-switch on="todo.done">
+                      <div ng-switch-when="true">
+                        <div class="done"></div>
+                      </div>
+                    </div>
+                  </span>
+
+                  <div
+                    ng-switch
+                    on="todo.done"
+                    style="display: flex; align-items: center"
+                  >
+                    <div class="todo button" ng-click="deleteTodo(todo._id)">
+                      DELETE
+                    </div>
+                    <div ng-switch-when="false">
+                      <div class="todo button" ng-click="choseTodo(todo)">
+                        UPDATE
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <label>
+                  <form
+                    ng-show="todo._id == chosenTodo._id"
+                    class="new-todo"
+                    style="width: 400px"
+                  >
+                    <input
+                      class="todo newTodo update"
+                      ng-model="chosenTodo.text"
+                      \
+                    />
+                    <button
+                      class="todo button update"
+                      type="submit"
+                      ng-click="updateTodo(chosenTodo)"
+                    >
+                      Save
+                    </button>
+                  </form>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
